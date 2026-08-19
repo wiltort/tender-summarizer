@@ -1,13 +1,28 @@
-from fastapi import FastAPI
-from src.core.config import settings
+import logging
 from contextlib import asynccontextmanager
+
+from fastapi import FastAPI
+
+from src.apps import apps_router
+from src.core.config import settings
+
+logger = logging.getLogger(__name__)
+
+
+def _setup_logging() -> None:
+    logging.basicConfig(
+        level=getattr(logging, settings.log_level.upper(), logging.INFO),
+        format="%(asctime)s | %(levelname)-8s | %(name)s | %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print("Сервис запускается...")
+    _setup_logging()
+    logger.info("Сервис запускается...")
     yield
-    print("Сервис остановлен.")
+    logger.info("Сервис остановлен.")
 
 
 app = FastAPI(
@@ -17,6 +32,8 @@ app = FastAPI(
     lifespan=lifespan,
     debug=settings.debug,
 )
+
+app.include_router(router=apps_router)
 
 
 @app.get("/")
