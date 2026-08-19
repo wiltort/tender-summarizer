@@ -2,9 +2,9 @@ class AppException(Exception):
     pass
 
 
-class PDFException(AppException):
+class PDFProcessingError(AppException):
     pass
 
 
-class LLMServiceException(AppException):
+class LLMServiceError(AppException):
     pass
