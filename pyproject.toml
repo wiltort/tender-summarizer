@@ -13,7 +13,8 @@ dependencies = [
     "python-multipart (>=0.0.32,<0.0.33)",
     "pdfplumber (>=0.11.10,<0.12.0)",
     "openai (>=3.3.0,<4.0.0)",
-    "python-dotenv (>=1.2.3,<2.0.0)"
+    "python-dotenv (>=1.2.3,<2.0.0)",
+    "pydantic-settings (>=2.15.0,<3.0.0)",
 ]
 
 [tool.ruff]
@@ -35,7 +36,7 @@ indent-style = "space"
 line-ending = "auto"
 
 [tool.poetry]
-packages = [{include = "tender_summarizer", from = "src"}]
+packages = [{include = "src"}]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
@@ -46,3 +47,6 @@ dev = [
     "pre-commit (>=4.6.2,<5.0.0)",
     "ruff (>=0.16.3,<0.17.0)"
 ]
+
+[project.scripts]
+app = "main:start"
