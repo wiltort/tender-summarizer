@@ -22,11 +22,11 @@ class Settings(BaseSettings):
     openai_api_key: str
     openai_api_base_url: str | None = None
     openai_model: str | None = None
-    # Таймаут запроса к API в секундах.
+
     openai_timeout: float = 120.0
-    # Количество попыток (включая первую) при обращении к LLM.
+
     openai_max_retries: int = 3
-    # Базовый шаг экспоненциального бэкоффа между попытками (сек).
+
     openai_retry_backoff: float = 1.0
     openai_temperature: float = 0.1
 
@@ -35,8 +35,6 @@ class Settings(BaseSettings):
         args = {
             "api_key": self.openai_api_key,
             "timeout": self.openai_timeout,
-            # Ретраи реализованы на уровне сервиса (см. LLMService),
-            # поэтому встроенные ретраи клиента отключены.
             "max_retries": 0,
         }
         if self.openai_api_base_url:
