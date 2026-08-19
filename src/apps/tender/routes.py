@@ -1,3 +1,5 @@
+from functools import lru_cache
+
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
 from src.apps.tender.services.pdf_parser import PDFParser
 from src.apps.tender.services.llm_service import LLMService
@@ -7,10 +9,12 @@ from src.apps.tender.schemas import TenderSummaryResponse, ErrorResponse
 tender_router = APIRouter(prefix="/tender", tags=["tender summary"])
 
 
+@lru_cache
 def get_pdf_parser() -> PDFParser:
     return PDFParser()
 
 
+@lru_cache
 def get_llm_service() -> LLMService:
     return LLMService()
 
